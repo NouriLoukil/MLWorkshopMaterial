@@ -25,33 +25,3 @@ trial1 = Pipeline([
 ])
  
 train(trial1, news.data, news.target)
-
-
-from nltk.corpus import stopwords
-stopWords = set(stopwords.words('english'))
-trial2 = Pipeline([
-    ('vectorizer', TfidfVectorizer(stop_words=stopwords.words('english'))),
-    ('classifier', MultinomialNB()),
-])
- 
-train(trial2, news.data, news.target)
-
-
-
-import string
-import nltk 
-nltk.download('punkt')
-from nltk.stem import PorterStemmer
-from nltk.tokenize import word_tokenize
- 
-def stemming_tokenizer(text):
-    stemmer = PorterStemmer()
-    return [stemmer.stem(w) for w in word_tokenize(text)]
- 
-trial5 = Pipeline([
-    ('vectorizer', TfidfVectorizer(tokenizer=stemming_tokenizer,
-                             stop_words=stopwords.words('english') + list(string.punctuation))),
-    ('classifier', MultinomialNB(alpha=0.05)),
-])
- 
-train(trial5, news.data, news.target)
